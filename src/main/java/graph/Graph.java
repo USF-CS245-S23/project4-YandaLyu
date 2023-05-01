@@ -1,6 +1,9 @@
 package graph;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A class that represents a graph: stores the array of city nodes, the
@@ -16,6 +19,7 @@ public class Graph {
     private int numEdges; // total number of edges
     // Add other variable(s) as needed:
     // add a HashMap to map cities to vertexIds.
+    Map<String, Integer> map = new HashMap<>();
 
     /**
      * Constructor. Read graph info from the given file,
@@ -25,7 +29,52 @@ public class Graph {
      */
     public Graph(String filename) {
         // FILL IN CODE
+        List<String> lines = readGraphFile(filename);
 
+        int nodeNums = Integer.parseInt(lines.get(1).strip());
+        this.nodes = new CityNode[nodeNums];
+
+        for (int i = 0; i < nodeNums; i++) {
+            String[] sts = lines.get(i+2).split(" ");
+            String name = sts[0];
+            double x = Double.parseDouble(sts[1]);
+            double y = Double.parseDouble(sts[2]);
+            this.nodes[i] = new CityNode(name, x, y);
+            map.put(name, i);
+        }
+
+        this.adjacencyList = new Edge[nodeNums];
+        for (int i = nodeNums + 3; i < lines.size(); i++) {
+            String[] sts = lines.get(i).split(" ");
+            int sourceCity = map.get(sts[0]);
+            int destCity = map.get(sts[1]);
+            int cost = Integer.parseInt(sts[2]);
+
+            Edge edgeS = new Edge(sourceCity, destCity, cost);
+            Edge edgeD = new Edge(destCity, sourceCity, cost);
+            numEdges += 2;
+
+            Edge p = getFirstEdge(sourceCity);
+            if (p == null) {
+                this.adjacencyList[sourceCity] = edgeS;
+            } else {
+                while (p.next() != null) {
+                    p = p.next();
+                }
+                p.setNext(edgeS);
+            }
+
+            p = getFirstEdge(destCity);
+            if (p == null) {
+                this.adjacencyList[destCity] = edgeD;
+            } else {
+                while (p.next() != null) {
+                    p = p.next();
+                }
+                p.setNext(edgeD);
+            }
+
+        }
     }
 
     /**
@@ -116,5 +165,7 @@ public class Graph {
         return nodes[nodeId];
     }
 
-
+    public Map<String, Integer> getMap() {
+        return map;
+    }
 }
