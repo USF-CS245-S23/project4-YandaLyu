@@ -1,6 +1,10 @@
 package graph;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +81,23 @@ public class Graph {
         }
     }
 
+    /**
+     * read USA.txt to String
+     * @param fileName
+     * @return
+     */
+    private List<String> readGraphFile(String fileName) {
+        List<String> res = new ArrayList<>();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(fileName));
+            String str;
+            while ((str = in.readLine()) != null) {
+                res.add(str);
+            }
+        } catch (IOException e) {
+        }
+        return res;
+    }
     /**
      * Return the number of nodes in the graph
      * @return number of nodes
