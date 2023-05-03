@@ -36,6 +36,10 @@ public abstract class MSTAlgorithm {
      * On each line it should print one edge, using names of two cities.
      * */
     public void printMST() {
+        for (Edge e:edgesMST
+        ) {
+            System.out.println(graph.getNode(e.getId1()).getCity() + "-" + graph.getNode(e.getId2()).getCity() + ": " + e.getCost());
+        }
         // FILL IN CODE
     }
 
