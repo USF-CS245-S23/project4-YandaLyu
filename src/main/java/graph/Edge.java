@@ -72,7 +72,7 @@ public class Edge implements Comparable<Edge> {
     public int compareTo(Edge o) {
         // FILL IN CODE
 
-        return 0; // change
+        return Integer.compare(this.cost, o.cost); // change
     }
 
 
