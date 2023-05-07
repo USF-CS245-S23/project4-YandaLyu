@@ -1,6 +1,10 @@
 package mstAlgorithms;
 
+import graph.Edge;
 import graph.Graph;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** Subclass of MSTAlgorithm. Uses Prim's algorithm to compute MST of the graph. */
 public class PrimAlgorithm extends MSTAlgorithm {
@@ -24,8 +28,17 @@ public class PrimAlgorithm extends MSTAlgorithm {
     @Override
     public void computeMST() {
         // FILL IN CODE
-
-
-
+        boolean[] tableAdded = new boolean[numNodes()];
+        List<Edge> candidates = new ArrayList<>();
+        int nextV = sourceVertex;
+        for (int i = 0; i < numNodes(); i++) {
+            tableAdded[nextV] = true;
+            Edge e = getFirstEdge(nextV);
+            candidates.add(e);
+            while (e.next() != null) {
+                e = e.next();
+                candidates.add(e);
+            }
+        }
     }
 }
