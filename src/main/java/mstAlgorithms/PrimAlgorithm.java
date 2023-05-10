@@ -39,6 +39,34 @@ public class PrimAlgorithm extends MSTAlgorithm {
                 e = e.next();
                 candidates.add(e);
             }
+            nextV = findMinimumNonAddedVertex(tableAdded, candidates);
         }
+    }
+    /**
+     * find min no added vertex
+     * @param table
+     * @param candidates
+     * @return
+     */
+    private int findMinimumNonAddedVertex(boolean[] table, List<Edge> candidates) {
+        Edge minEdge = null;
+        int minCost = Integer.MAX_VALUE;
+        for (Edge e:candidates
+        ) {
+            if (table[e.getId2()]) {
+                continue;
+            }
+            if (e.getCost() < minCost) {
+                minCost = e.getCost();
+                minEdge = e;
+            }
+        }
+        if (minEdge != null) {
+            addMSTEdge(minEdge);
+            int nextV = minEdge.getId2();
+            candidates.remove(minEdge);
+            return nextV;
+        }
+        return -1;
     }
 }
