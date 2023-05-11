@@ -67,6 +67,8 @@ public class PrimAlgorithm extends MSTAlgorithm {
             candidates.remove(minEdge);
             return nextV;
         }
+
         return -1;
+
     }
 }

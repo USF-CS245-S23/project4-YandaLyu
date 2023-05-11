@@ -29,7 +29,7 @@ public class Graph {
      * Constructor. Read graph info from the given file,
      * and create nodes and edges of the graph.
      *
-     *   @param filename name of the file that has nodes and edges
+     * @param filename name of the file that has nodes and edges
      */
     public Graph(String filename) {
         // FILL IN CODE
@@ -39,7 +39,7 @@ public class Graph {
         this.nodes = new CityNode[nodeNums];
 
         for (int i = 0; i < nodeNums; i++) {
-            String[] sts = lines.get(i+2).split(" ");
+            String[] sts = lines.get(i + 2).split(" ");
             String name = sts[0];
             double x = Double.parseDouble(sts[1]);
             double y = Double.parseDouble(sts[2]);
@@ -77,8 +77,20 @@ public class Graph {
                 }
                 p.setNext(edgeD);
             }
-
         }
+        for(CityNode n:nodes) {
+            System.out.println(map.get(n.getCity()) + ": " + n.getCity());
+        }
+        System.out.println();
+        for(Edge e:adjacencyList) {
+            Edge p = e;
+            while (p != null) {
+                System.out.print(p.getId1() + "-" + p.getId2() + ": " + p.getCost() + " | ");
+                p = p.next();
+            }
+            System.out.println("-------------------");
+        }
+
     }
 
     /**
@@ -96,7 +108,9 @@ public class Graph {
             }
         } catch (IOException e) {
         }
+
         return res;
+
     }
     /**
      * Return the number of nodes in the graph
